@@ -6,40 +6,44 @@ need — what the app protects you from and what it doesn't.
 
 ## Supported versions
 
-Only the **latest release**. Releases are semver tags (`v1.0.0` → `v1.2.3`, see
-[CHANGELOG.md](CHANGELOG.md)); there is no LTS or maintenance branch and older tags are never
-patched. A fix ships in the next release and in the `latest` images on ghcr.io.
+This fork tracks whatever it last pulled from upstream and cuts no releases of its own. It does
+publish container images (`ghcr.io/wally720/opengym-{api,web}`), rebuilt from `main` on every
+push. Fixes for the core app land upstream
+([gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym)) and reach this
+fork only when it is synced.
 
 Updating a self-hosted instance:
 
 ```bash
-git pull && docker compose pull && docker compose up -d
+git pull && docker compose up -d --build
 ```
 
 ## Reporting a vulnerability
 
-Use GitHub's private vulnerability reporting — repo **Security** tab → **Report a vulnerability**:
+**This fork is published as-is and is not actively maintained.** Where a report goes depends on
+what it affects:
 
-<https://github.com/DuarteSantos8/openGym/security/advisories/new>
-
-> Private reporting has to be switched on in the repository settings for that link to work
-> (Settings → Advanced Security → Private vulnerability reporting). If it 404s, open a normal
-> issue saying only *"I need a private channel for a security report"* — no details, no repro —
-> and it will be enabled.
+- **The core app** (auth, passkeys, sessions, data handling) — report upstream, where fixes are
+  actually shipped: [gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym).
+- **The AI Coach** — it is not upstream's code. It came from
+  [alexpcosta/opengym](https://github.com/alexpcosta/opengym), which has its issue tracker
+  switched off, so there is currently no official channel for it.
+- **Something this fork introduced** — use GitHub's private vulnerability reporting on this
+  repository: **Security** tab → **Report a vulnerability**. If that 404s, open a normal issue
+  saying only *"I need a private channel for a security report"* — no details, no repro — and it
+  will be enabled.
 
 Please don't put a working exploit in a public issue if it can be used against other people's
 instances. Everything else (a crash you can only trigger on your own box, a scanner warning)
 is fine as a normal issue.
 
-Useful in a report: the version or commit, whether you're running the prebuilt images or a
-source build, your `RP_ID`/`ORIGIN` and what sits in front of the app, steps to reproduce, and
+Useful in a report: the version or commit, your `RP_ID`/`ORIGIN` and what sits in front of the app, steps to reproduce, and
 what an attacker gets out of it.
 
-**On response times:** this is a hobby project maintained by one person alongside school. There
-is no SLA and no bounty. Expect days rather than hours, and longer during exam periods. If a
-week goes by with no reply, comment on the advisory thread — it's more likely to be a missed
-notification than a decision. If a report goes unfixed and you want to disclose publicly, say so
-in the thread; there's no objection, and no request to sit on it indefinitely.
+**On response times:** this fork is published as-is by one person, with no SLA and no bounty.
+Anything that needs a real fix belongs upstream, which is actively maintained. If a report here
+goes unanswered and you want to disclose publicly, go ahead — there is no objection and no
+request to sit on it.
 
 ## In scope
 
@@ -50,7 +54,8 @@ in the thread; there's no objection, and no request to sit on it indefinitely.
   change a signed-in user's data.
 - **Shipped deployment config** — `docker-compose.yml`, `web/nginx.conf`, the two Dockerfiles:
   a default that exposes something a self-hoster wouldn't expect to be exposed.
-- **The published images** `ghcr.io/duartesantos8/opengym-api` and `-web`.
+- **The published images** `ghcr.io/wally720/opengym-api` and `-web`, and the build that
+  produces them (`docker-compose.yml` and the two Dockerfiles).
 
 ## Out of scope
 

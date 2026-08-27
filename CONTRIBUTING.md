@@ -52,13 +52,16 @@ cd frontend && npm test
 
 | You have | Goes to |
 | --- | --- |
-| A question, or self-hosting that won't behave | [Discussions → Q&A](https://github.com/DuarteSantos8/openGym/discussions/categories/q-a) |
-| An idea you're not sure about yet | [Discussions → Ideas](https://github.com/DuarteSantos8/openGym/discussions/categories/ideas) |
-| A reproducible bug | [Issues](https://github.com/DuarteSantos8/openGym/issues) |
-| A change you've already built | A pull request |
+| A question, or self-hosting that won't behave | Upstream: [gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym) |
+| An idea for the core app | Upstream, same place — that's where it can actually land |
+| A bug in the AI Coach | Nowhere official: the fork that added it has issues switched off |
+| Something broken **in this fork specifically** | An issue here |
+| A change you've already built | A pull request here |
 
-An answered question in Q&A is worth more than the same answer buried in a closed issue — the
-next person searching "passkey login fails behind my reverse proxy" actually finds it.
+This fork is published as-is: it exists to fix an install path that could not deliver the AI
+Coach. It is not a maintained distribution and promises no response time. Anything about the
+tracker itself belongs upstream, where the project is alive and where an answer helps the next
+person who searches for it.
 
 ## Reporting bugs
 

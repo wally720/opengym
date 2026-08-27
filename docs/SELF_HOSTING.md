@@ -8,17 +8,24 @@ This guide takes you from "just cloned it" to "using it from my phone over the i
 Requirements: [Docker](https://docs.docker.com/get-docker/) with the Compose plugin.
 
 ```bash
-git clone https://github.com/DuarteSantos8/gym-app opengym
+git clone https://github.com/wally720/opengym
 cd opengym
 cp .env.example .env
-docker compose pull   # prebuilt images from ghcr.io (amd64 + arm64) — or skip and build from source
+docker compose pull      # prebuilt images (amd64 + arm64); skip to build instead
 docker compose up -d
 ```
 
+- **Both paths include the AI Coach.** The images at `ghcr.io/wally720/opengym-{api,web}` are
+  published from this repository's `main`. Upstream openGym's images are not the same thing and
+  do not contain the Coach.
+- **To build from source**, skip the `pull` and run `docker compose up -d --build`. Compose also
+  builds on its own if the images can't be fetched, so the commands above work regardless.
+- **On a small VPS, prefer pulling.** Building the frontend is the memory-hungry step and is
+  where a 1 GB server usually dies.
 - First start downloads the exercise images/GIFs (~140 MB) once into `app/img` and `app/gif`.
+  Subsequent starts take seconds.
 - Open **http://localhost:8080** and create a profile with a passkey.
-- Rather build from source than pull prebuilt images? Skip `docker compose pull` and run
-  `docker compose up -d --build` instead — no Node needed locally either way.
+- No Node or build tooling is needed on the host — Docker does all of it.
 
 Check it's healthy:
 
@@ -137,7 +144,7 @@ refuses the lock while the phone is in Low Power Mode.
 
 ## 7. Updating
 
-Running prebuilt images:
+Running the prebuilt images:
 
 ```bash
 git pull                    # picks up compose/config changes
@@ -151,6 +158,9 @@ Building from source instead:
 git pull
 docker compose up -d --build
 ```
+
+Images are rebuilt and republished on every push to this repository's `main`, so `pull` follows
+that. On a small server it is also the cheap path: nothing is compiled locally.
 
 The app shell is versioned (`?v=N`) so clients pick up changes on next load. Your `./data` and the
 downloaded media are untouched.
@@ -240,4 +250,5 @@ act on it.
 | No "Notifications" option in Settings | Requires a signed-in profile and HTTPS (or `localhost`) — guest mode and plain HTTP over LAN can't subscribe. |
 | Day reminder fires at the wrong time | Toggle it off and on in Settings so it re-detects your browser's timezone (also happens automatically on every app load — see section 6). |
 | Want to reset a stuck login | Delete the cookie in your browser; sessions are just signed cookies. |
-| `docker compose pull` fails with "denied" / "unauthorized" | The prebuilt images aren't published yet, or need to be, or the GHCR package is still private — build from source instead (`docker compose up -d --build`). |
+| `docker compose pull` fails with "denied" / "unauthorized" | The images are published from this repository's `main`; a fork or branch that has never run the publish workflow has none. Use `docker compose up -d --build`. |
+| The build is killed with no clear error | Almost always out of memory: building the frontend is the memory-hungry step. Add swap, or build on a bigger machine. |
