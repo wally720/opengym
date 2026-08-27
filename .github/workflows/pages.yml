@@ -1,5 +1,10 @@
 # Publishes the browser-only demo to this repository's GitHub Pages site.
-# Requires Pages to be enabled in the repository settings; it is off by default on a fork.
+#
+# MANUAL ONLY. Upstream ran this on every push to main; here it is opt-in, because Pages is
+# off by default on a fork and an automatic run would just fail. To publish a demo: enable
+# Pages in Settings → Pages (source: GitHub Actions), then run this workflow from the Actions
+# tab. Until then there is no demo for this fork, and the website's demo links point at a URL
+# that does not resolve yet.
 #
 # Pages serves static files only, so this build has no backend — VITE_DEMO=1 makes the app
 # boot straight into guest mode with a seeded example history (see frontend/src/lib/demo.js).
@@ -8,11 +13,6 @@
 name: Deploy demo to GitHub Pages
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'frontend/**'
-      - '.github/workflows/pages.yml'
   workflow_dispatch:
 
 permissions:
