@@ -6,14 +6,15 @@ need — what the app protects you from and what it doesn't.
 
 ## Supported versions
 
-Only the **latest release**. Releases are semver tags (`v1.0.0` → `v1.2.3`, see
-[CHANGELOG.md](CHANGELOG.md)); there is no LTS or maintenance branch and older tags are never
-patched. A fix ships in the next release and in the `latest` images on ghcr.io.
+This fork tracks whatever it last pulled from upstream; it cuts no releases of its own and
+ships no container images. Fixes for the core app land upstream
+([gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym)) and reach this
+fork only when it is synced.
 
 Updating a self-hosted instance:
 
 ```bash
-git pull && docker compose pull && docker compose up -d
+git pull && docker compose up -d --build
 ```
 
 ## Reporting a vulnerability
@@ -35,15 +36,13 @@ Please don't put a working exploit in a public issue if it can be used against o
 instances. Everything else (a crash you can only trigger on your own box, a scanner warning)
 is fine as a normal issue.
 
-Useful in a report: the version or commit, whether you're running the prebuilt images or a
-source build, your `RP_ID`/`ORIGIN` and what sits in front of the app, steps to reproduce, and
+Useful in a report: the version or commit, your `RP_ID`/`ORIGIN` and what sits in front of the app, steps to reproduce, and
 what an attacker gets out of it.
 
-**On response times:** this is a hobby project maintained by one person alongside school. There
-is no SLA and no bounty. Expect days rather than hours, and longer during exam periods. If a
-week goes by with no reply, comment on the advisory thread — it's more likely to be a missed
-notification than a decision. If a report goes unfixed and you want to disclose publicly, say so
-in the thread; there's no objection, and no request to sit on it indefinitely.
+**On response times:** this fork is published as-is by one person, with no SLA and no bounty.
+Anything that needs a real fix belongs upstream, which is actively maintained. If a report here
+goes unanswered and you want to disclose publicly, go ahead — there is no objection and no
+request to sit on it.
 
 ## In scope
 
@@ -54,7 +53,8 @@ in the thread; there's no objection, and no request to sit on it indefinitely.
   change a signed-in user's data.
 - **Shipped deployment config** — `docker-compose.yml`, `web/nginx.conf`, the two Dockerfiles:
   a default that exposes something a self-hoster wouldn't expect to be exposed.
-- **The published images** `ghcr.io/duartesantos8/opengym-api` and `-web`.
+- **The build** as defined by `docker-compose.yml` and the two Dockerfiles. This fork
+  publishes no container images; everything is built from source.
 
 ## Out of scope
 
