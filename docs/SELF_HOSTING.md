@@ -8,7 +8,7 @@ This guide takes you from "just cloned it" to "using it from my phone over the i
 Requirements: [Docker](https://docs.docker.com/get-docker/) with the Compose plugin.
 
 ```bash
-git clone https://github.com/alexpcosta/opengym
+git clone https://github.com/wally720/opengym
 cd opengym
 cp .env.example .env
 docker compose up -d --build

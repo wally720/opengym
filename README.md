@@ -19,9 +19,8 @@ No account on someone else's server, no subscription, no ads. Just `docker compo
 ![Docker](https://img.shields.io/badge/Docker-compose-2496ED?style=flat-square&logo=docker&logoColor=white)
 ![No tracking](https://img.shields.io/badge/telemetry-none-f472b6?style=flat-square)
 <br>
-![GitHub last commit](https://img.shields.io/github/last-commit/DuarteSantos8/openGym?style=flat-square)
-[![GitHub stars](https://img.shields.io/github/stars/DuarteSantos8/openGym?style=flat-square)](https://github.com/DuarteSantos8/openGym/stargazers)
-[![GitHub issues](https://img.shields.io/github/issues/DuarteSantos8/openGym?style=flat-square)](https://github.com/DuarteSantos8/openGym/issues)
+![GitHub last commit](https://img.shields.io/github/last-commit/wally720/opengym?style=flat-square)
+[![GitHub stars](https://img.shields.io/github/stars/wally720/opengym?style=flat-square)](https://github.com/wally720/opengym/stargazers)
 
 </div>
 
@@ -29,7 +28,7 @@ No account on someone else's server, no subscription, no ads. Just `docker compo
 
 > ### 🤖 This is a fork — it adds the AI Coach
 >
-> A fork of [DuarteSantos8/openGym](https://github.com/DuarteSantos8/openGym) that adds one
+> A fork of [DuarteSantos8/openGym](https://gitlab.com/DuarteSantos8/opengym) that adds one
 > optional feature: an AI that **designs** your training plan and **revises it from what you
 > actually log**, running on your own server under your own provider account.
 >
@@ -103,7 +102,7 @@ as a home-screen app, passkey sign-in, offline support, sync across your phone a
 You need [Docker](https://docs.docker.com/get-docker/) with Compose.
 
 ```bash
-git clone https://github.com/alexpcosta/opengym
+git clone https://github.com/wally720/opengym
 cd opengym
 cp .env.example .env
 docker compose up -d --build   # builds from source — see the note below
@@ -211,26 +210,34 @@ lives in pure functions under `frontend/src/lib/` with tests next to them: `npm 
 `frontend/`. Vitest is a dev dependency; the app itself ships no runtime dependencies beyond
 React, the router and Zustand.
 
-## Community
+## Support and scope
 
-- **[Q&A](https://github.com/DuarteSantos8/openGym/discussions/categories/q-a)** — self-hosting
-  help, passkey/login trouble, "how do I…". Most login problems turn out to be an `RP_ID`/`ORIGIN`
-  mismatch.
-- **[Ideas](https://github.com/DuarteSantos8/openGym/discussions/categories/ideas)** — features
-  worth talking through before anyone writes code.
-- **[Show and tell](https://github.com/DuarteSantos8/openGym/discussions/categories/show-and-tell)**
-  — your setup, your plan templates, whatever you built on top.
-- **[Issues](https://github.com/DuarteSantos8/openGym/issues)** — bugs, and work that's already
-  been agreed on.
+**This fork is published as-is and is not a support channel.** It exists because the install
+instructions it inherited could not deliver the AI Coach, and those are fixed here. The issue
+tracker is used for this fork's own work, not for general help.
+
+- **Questions about the core app** — self-hosting, passkeys, reverse proxies, the tracker
+  itself — belong upstream, where the project is actively maintained:
+  [gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym). Most login
+  problems turn out to be an `RP_ID`/`ORIGIN` mismatch.
+- **The AI Coach** is not upstream's work, so don't take Coach questions there. It came from
+  [alexpcosta/opengym](https://github.com/alexpcosta/opengym), which has its issue tracker
+  switched off — there is currently nowhere official to report it.
+- **Something specific to this fork** — a broken instruction, a build that won't run — an issue
+  here is fine. No response time is promised.
 
 ## Contributing
 
-Issues and PRs welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Good first issues: more starter
-plans, exercise-data languages, import from other trackers. **A ⭐ helps more people find it.**
+**Contribute to the app upstream**, at
+[gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym) — that's where work
+on the tracker reaches everyone who uses it. See [CONTRIBUTING.md](CONTRIBUTING.md) for what
+belongs where.
+
+A PR here makes sense only for something this fork itself got wrong.
 
 openGym is free and stays free: AGPL, no subscription, no paid tier, nothing held back for
-sponsors. If it replaced a paid tracker for you and you want to chip in, the Sponsor button at the
-top of the page is there — a star, a bug report or a PR is worth just as much.
+sponsors. If it replaced a paid tracker for you and you want to chip in, that support belongs
+with the people who wrote it — upstream, and the author of the AI Coach.
 
 ## License
 

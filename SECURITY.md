@@ -18,14 +18,18 @@ git pull && docker compose pull && docker compose up -d
 
 ## Reporting a vulnerability
 
-Use GitHub's private vulnerability reporting — repo **Security** tab → **Report a vulnerability**:
+**This fork is published as-is and is not actively maintained.** Where a report goes depends on
+what it affects:
 
-<https://github.com/DuarteSantos8/openGym/security/advisories/new>
-
-> Private reporting has to be switched on in the repository settings for that link to work
-> (Settings → Advanced Security → Private vulnerability reporting). If it 404s, open a normal
-> issue saying only *"I need a private channel for a security report"* — no details, no repro —
-> and it will be enabled.
+- **The core app** (auth, passkeys, sessions, data handling) — report upstream, where fixes are
+  actually shipped: [gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym).
+- **The AI Coach** — it is not upstream's code. It came from
+  [alexpcosta/opengym](https://github.com/alexpcosta/opengym), which has its issue tracker
+  switched off, so there is currently no official channel for it.
+- **Something this fork introduced** — use GitHub's private vulnerability reporting on this
+  repository: **Security** tab → **Report a vulnerability**. If that 404s, open a normal issue
+  saying only *"I need a private channel for a security report"* — no details, no repro — and it
+  will be enabled.
 
 Please don't put a working exploit in a public issue if it can be used against other people's
 instances. Everything else (a crash you can only trigger on your own box, a scanner warning)
