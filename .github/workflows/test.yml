@@ -38,6 +38,11 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
         working-directory: frontend
+      # src/lib/coach.test.js checks the client against api/coach/ directly rather than a
+      # transcribed copy, so it loads modules that import the Agent SDK. Without api's
+      # dependencies that file fails to import and the suite fails.
+      - run: npm ci --omit=dev
+        working-directory: api
       - run: npm test
         working-directory: frontend
       # A broken import or bad JSX fails the build long before any test covers it.
@@ -53,8 +58,12 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      # No dependencies to install: the Coach tests run on node:test and drive the in-repo
-      # fixture provider, so the whole job graph works without an AI account or a network.
+      # The Coach tests need no AI account and no network — they drive the in-repo fixture
+      # provider. They do need api's dependencies: coach/adapters/index.js imports every
+      # adapter to build its registry, and the Claude one imports the Agent SDK at module
+      # scope, so the suite cannot even load without them.
+      - run: npm ci --omit=dev
+        working-directory: api
       - run: npm test
         working-directory: api
       # The API's copy of the exercise catalogue is generated and committed. A dataset change
