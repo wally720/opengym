@@ -22,9 +22,11 @@ services:
     restart: "no"
 
   # Passkey auth + per-user data (Node, no framework).
-  # Built from source: this fork publishes no images, and the AI Coach only exists in this
-  # source tree. Use `docker compose up -d --build`.
+  # image: prebuilt, published from this fork's main by .github/workflows/docker-publish.yml
+  # (amd64 + arm64) — `docker compose pull`. build: from source — `docker compose up -d --build`.
+  # Both carry the AI Coach; these images are built from this tree, not from upstream.
   api:
+    image: ghcr.io/wally720/opengym-api:latest
     build: ./api
     restart: unless-stopped
     env_file: .env
@@ -41,6 +43,7 @@ services:
   # Builds the React frontend (multi-stage) and serves it, proxying /api → api
   # and the exercise media from the shared volume. Single origin for passkeys.
   web:
+    image: ghcr.io/wally720/opengym-web:latest
     build:
       context: .
       dockerfile: web/Dockerfile

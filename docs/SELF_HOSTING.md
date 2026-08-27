@@ -11,14 +11,19 @@ Requirements: [Docker](https://docs.docker.com/get-docker/) with the Compose plu
 git clone https://github.com/wally720/opengym
 cd opengym
 cp .env.example .env
-docker compose up -d --build
+docker compose pull      # prebuilt images (amd64 + arm64); skip to build instead
+docker compose up -d
 ```
 
-- **`--build` is required.** This fork publishes no container images, and the AI Coach exists
-  only in this source tree — a prebuilt image of upstream openGym does not contain it.
-  `docker compose pull` has nothing to fetch.
-- First start builds the images and downloads the exercise images/GIFs (~140 MB) once into
-  `app/img` and `app/gif`. Subsequent starts take seconds.
+- **Both paths include the AI Coach.** The images at `ghcr.io/wally720/opengym-{api,web}` are
+  published from this repository's `main`. Upstream openGym's images are not the same thing and
+  do not contain the Coach.
+- **To build from source**, skip the `pull` and run `docker compose up -d --build`. Compose also
+  builds on its own if the images can't be fetched, so the commands above work regardless.
+- **On a small VPS, prefer pulling.** Building the frontend is the memory-hungry step and is
+  where a 1 GB server usually dies.
+- First start downloads the exercise images/GIFs (~140 MB) once into `app/img` and `app/gif`.
+  Subsequent starts take seconds.
 - Open **http://localhost:8080** and create a profile with a passkey.
 - No Node or build tooling is needed on the host — Docker does all of it.
 
@@ -139,13 +144,23 @@ refuses the lock while the phone is in Low Power Mode.
 
 ## 7. Updating
 
+Running the prebuilt images:
+
 ```bash
-git pull                       # picks up code, compose and config changes
-docker compose up -d --build   # rebuild — updating always rebuilds here
+git pull                    # picks up compose/config changes
+docker compose pull
+docker compose up -d
 ```
 
-Every update rebuilds, because this fork ships no images. Expect the build time (and the
-memory it needs) on each update, not just the first install.
+Building from source instead:
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+Images are rebuilt and republished on every push to this repository's `main`, so `pull` follows
+that. On a small server it is also the cheap path: nothing is compiled locally.
 
 The app shell is versioned (`?v=N`) so clients pick up changes on next load. Your `./data` and the
 downloaded media are untouched.
@@ -235,5 +250,5 @@ act on it.
 | No "Notifications" option in Settings | Requires a signed-in profile and HTTPS (or `localhost`) — guest mode and plain HTTP over LAN can't subscribe. |
 | Day reminder fires at the wrong time | Toggle it off and on in Settings so it re-detects your browser's timezone (also happens automatically on every app load — see section 6). |
 | Want to reset a stuck login | Delete the cookie in your browser; sessions are just signed cookies. |
-| `docker compose pull` fails with "denied" / "unauthorized" | Expected — this fork publishes no images. Use `docker compose up -d --build`. |
+| `docker compose pull` fails with "denied" / "unauthorized" | The images are published from this repository's `main`; a fork or branch that has never run the publish workflow has none. Use `docker compose up -d --build`. |
 | The build is killed with no clear error | Almost always out of memory: building the frontend is the memory-hungry step. Add swap, or build on a bigger machine. |

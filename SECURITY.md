@@ -6,8 +6,9 @@ need — what the app protects you from and what it doesn't.
 
 ## Supported versions
 
-This fork tracks whatever it last pulled from upstream; it cuts no releases of its own and
-ships no container images. Fixes for the core app land upstream
+This fork tracks whatever it last pulled from upstream and cuts no releases of its own. It does
+publish container images (`ghcr.io/wally720/opengym-{api,web}`), rebuilt from `main` on every
+push. Fixes for the core app land upstream
 ([gitlab.com/DuarteSantos8/opengym](https://gitlab.com/DuarteSantos8/opengym)) and reach this
 fork only when it is synced.
 
@@ -53,8 +54,8 @@ request to sit on it.
   change a signed-in user's data.
 - **Shipped deployment config** — `docker-compose.yml`, `web/nginx.conf`, the two Dockerfiles:
   a default that exposes something a self-hoster wouldn't expect to be exposed.
-- **The build** as defined by `docker-compose.yml` and the two Dockerfiles. This fork
-  publishes no container images; everything is built from source.
+- **The published images** `ghcr.io/wally720/opengym-api` and `-web`, and the build that
+  produces them (`docker-compose.yml` and the two Dockerfiles).
 
 ## Out of scope
 

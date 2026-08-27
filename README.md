@@ -105,18 +105,22 @@ You need [Docker](https://docs.docker.com/get-docker/) with Compose.
 git clone https://github.com/wally720/opengym
 cd opengym
 cp .env.example .env
-docker compose up -d --build   # builds from source — see the note below
+docker compose pull            # prebuilt images (amd64 + arm64) — optional, see below
+docker compose up -d
 ```
 
-Open **http://localhost:8080**, tap **Create profile**, and you're in. First launch builds the
-images and downloads the exercise media (~140 MB) once; after that it starts in seconds. You
-don't need Node or any build tooling locally — Docker does all of it.
+Open **http://localhost:8080**, tap **Create profile**, and you're in. First launch downloads
+the exercise media (~140 MB) once; after that it starts in seconds. You don't need Node or any
+build tooling locally — Docker does all of it.
 
-> **Why `--build`, and not `docker compose pull`?**
-> This fork publishes no container images, so there is nothing to pull. More importantly, the
-> **AI Coach only exists in this source tree** — any prebuilt image of upstream openGym is
-> built without it. Building from source is the only way to get the feature this fork exists
-> for.
+> **Prebuilt or from source — both give you the AI Coach.**
+> The images at `ghcr.io/wally720/opengym-{api,web}` are published from this repository's own
+> `main`, so they contain the Coach. Upstream openGym's images do not, and never did: the Coach
+> only exists in this source tree.
+>
+> To build instead of pulling, skip the `pull` and run `docker compose up -d --build`. That
+> also happens automatically if the images can't be fetched, so the quickstart works either
+> way — building just takes longer and needs more memory on a small server.
 
 > Want it reachable from your phone over the internet with passkeys? You'll need an HTTPS
 > domain — a two-line change in `.env`. See **[docs/SELF_HOSTING.md](docs/SELF_HOSTING.md)**.
